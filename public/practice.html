@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetching</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        function LoadProducts(url){
+            document.querySelector("main").innerHTML= "";
+            fetch(url)
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(products){
+                products.map(function(product){
+                    var div = document.createElement("div");
+                    div.className = "card p-2 m-2";
+                    div.style.width = "200px";
+                    div.innerHTML = `
+                       <img src=${product.image} height="140" class="card-img-top">
+                       <div class="card-header" style="height:140px">
+                         <div>${product.title}</div>
+                       </div>
+                       <div class="card-body">
+                          <dl>
+                            <dt>Price</dt>
+                            <dd>${product.price}</dd>
+                            <dt>Rating</dt>
+                            <dd>${product.rating.rate} <span class="bi bi-star-fill text-success"></span> [${product.rating.count}] </dd>
+                          </dl>
+                       </div>
+                       <div class="card-footer">
+                          <button onclick="AddClick(${product.id})" class="btn btn-danger w-100">
+                             <span class="bi bi-cart4"></span> Add to Cart
+                          </button>
+                       </div>
+                    `;
+                    document.querySelector("main").appendChild(div);
+                })
+            })
+        }
+        function bodyload(){
+            LoadCategories();
+            LoadProducts("http://fakestoreapi.com/products");
+            GetCartCount();
+        }
+
+    </script>
+</head>
+<body class="container-fluid" onload="bodyload()">
+    <header class="d-flex justify-content-around">
+        <div>
+            <h1>Shopping</h1>
+
+        </div>
+       <div class="input-group ms-5">
+        <form >
+            <input type="text" class="form-control mt-3">
+            
+        </form>
+        <button class="btn btn-primary h-75 mt-3"> <span class="bi bi-search"></span>search</button>
+       </div>
+       <div>
+        <button class="btn btn-success ">Login</button>
+
+       </div>
+
+    </header>
+    <section>
+    <select id="lstCategories">
+
+    </select>
+    <main >
+        
+    </main>
+
+  </section>
+   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+</body>
+</html>
+  

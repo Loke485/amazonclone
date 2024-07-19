@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json</title>
+    <script>
+        function bodyload(){
+            fetch("http://fakestoreapi.com/products/categories")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(categories){
+                categories.map(function(category){
+                    var option = document.createElement("option");
+                    option.text=category.toUpperCase();
+                    option.value = category;
+                    document.getElementById("box").appendChild(option);
+                })
+            })
+           
+
+        }
+        function clickload(){
+            fetch("http://fakestoreapi.com/products")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(products){
+                products.map(function(product){
+                  var div=  document.createElement(div);
+                 div.className =`card`;
+                 div.style.width=`200px `;
+
+                  div.innerHTML=`
+                  <img src="${product.image}" height="200px" width="200px">
+                  <div>
+                    price ; ${product.price}
+                    </div>
+                    <div>
+                        Name : ${product.title}
+                        </div>
+                        <div>
+                            <button onclick="addclick(${product.id})"> add to cart</button>
+                            </div>`
+                        
+                       ;
+                  document.getElementById("middle").appendChild(div);
+                })
+            })
+        }
+        function addclick(){
+            alert("are sure to add to cart");
+            document.getElementById("cart").innerHTML=`thankup for selcet`
+            
+            
+
+        }
+    </script>
+    <style>
+        section{
+
+            display: grid;
+            grid-template-columns: 4fr 4fr 4fr;
+            box-shadow: 2px 2px 2px black;
+        }
+        .card:hover{
+            width:400px;
+        }
+    </style>
+</head>
+<body onload="bodyload()">
+    <header>
+    <h2> pratcie json</h2>   
+    </header>
+    <main>
+        <select id="box" >
+
+        </select>
+    </main>
+    <section id="middle" >
+
+    </section>
+    <button onclick="clickload()"> submit</button>
+    <div id="cart">
+
+    </div>
+    
+</body>
+</html>

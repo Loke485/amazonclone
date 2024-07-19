@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pratice</title>
+    <script>
+         function LoadCategories(){
+            fetch("http://fakestoreapi.com/products/categories")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(categories){
+                categories.unshift("all");
+                categories.map(function(category){
+                    var option = document.createElement("option");
+                    option.text = category.toUpperCase();
+                    option.value = category;
+                    document.getElementById("lstCategories").appendChild(option);
+                })
+            })
+        }
+        LoadCategories();
+
+        function LoadProducts(url){
+            document.querySelector("main").innerHTML= "";
+            fetch(url)
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(products){
+                products.map(function(product){
+                    var div = document.createElement("div");
+                    div.className = "card p-2 m-2";
+                    div.style.width = "200px";
+                    div.innerHTML = `
+                       <img src=${product.image} height="140" class="card-img-top">
+                       <div class="card-header" style="height:140px">
+                         <div>${product.title}</div>
+                       </div>
+                       <div class="card-body">
+                          <dl>
+                            <dt>Price</dt>
+                            <dd>${product.price}</dd>
+                            <dt>Rating</dt>
+                            <dd>${product.rating.rate} <span class="bi bi-star-fill text-success"></span> [${product.rating.count}] </dd>
+                          </dl>
+                       </div>
+                       <div class="card-footer">
+                          <button onclick="AddClick(${product.id})" class="btn btn-danger w-100">
+                             <span class="bi bi-cart4"></span> Add to Cart
+                          </button>
+                       </div>
+                    `;
+                    document.querySelector("main").appendChild(div);
+                })
+            })
+        }
+
+        function bodyload(){
+            LoadCategories();
+            LoadProducts("http://fakestoreapi.com/products");
+            GetCartCount();
+        }
+
+   
+
+    </script>
+</head>
+<body onload="bodyload()">
+    <header>
+        <select id="lstCategories">
+
+        </select>
+        
+    </header>
+    <section id="middle">
+
+    </section>
+    <main>
+
+    </main>
+
+
+    
+</body>
+</html>

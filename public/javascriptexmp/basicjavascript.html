@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascript</title>
+    <script>
+        function clk(){
+            var mobile = document.getElementById("txt").value;
+            var mobileerror = document.getElementById("txterror");
+            if(mobile=="")
+            {
+                mobileerror.innerHTML="enter the mobile number ".fontcolor('red');
+                
+            }
+        }
+    </script>
+</head>
+<body>
+    <dl>
+        <dt>
+            verify your mobile
+        </dt>
+        <dd><input type="text" id="txt" onblur="clk()"></dd>
+        <dd id="txterror"></dd>
+    </dl>
+    
+</body>
+</html>
